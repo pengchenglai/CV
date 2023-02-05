@@ -1,0 +1,84 @@
+---
+name: Pengcheng LAI
+position: "Intern of the Global Forest Resources Assessment Team"
+address: "Forestry Division, FAO"
+phone: +39 3241508246
+profilepic: "C:/Users/14353/Desktop/CV/data/CV.jpg"
+github: "pengchenglai"
+email: "pengcheng.lai@qq.com / pengcheng.lai@fao.org"
+date: "`r format(Sys.time(), '%B %Y')`"
+aboutme: "About me: Curious, detail-oriented, and always ready to explore creative ways to generate insights from data.  This CV is created by R package vitae and the source code can be found **[here](https://github.com/pengchenglai/CV)**."
+headcolor: 414141
+output: 
+  vitae::awesomecv:
+    page_total: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+library(here)
+```
+
+```{r functions}
+readExcelSheets <- function(filename){
+  # read all sheets in .xlsx 
+  all <- readxl::excel_sheets(filename)
+  
+  # import each sheet into a list using readxl::read_excel
+  list <- lapply(all, function(x) readxl::read_excel(filename, sheet = x))
+  
+  # save sheet name for each sheet (list)
+  names(list) <- all
+  
+  # breaks up list and creates a dataframe for each sheet with df names matching sheet names
+  list2env(list, envir = .GlobalEnv)
+}
+```
+
+```{r load-data, message=F, results='hide'}
+
+filename <- here::here("C:/Users/14353/Desktop/CV/data", 
+                       "CV.xlsx")
+readExcelSheets(filename)
+```
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+
+# Education
+
+```{r}
+library(tibble)
+education %>% 
+  detailed_entries(with = degree,
+                   when = year,
+                   what = institution,
+                   where = where,
+                   why = details,
+                   .protect=FALSE)
+```
+
+# Academic experience
+```{r}
+academic %>% 
+  detailed_entries(with = role,
+                   when = year,
+                   what = institution,
+                   where = where,
+                   why = details,
+                   .protect=FALSE)
+```
+
+# Professional experience
+
+```{r}
+professional %>% 
+  detailed_entries(with = role,
+                   when = year,
+                   what = institution,
+                   where = where,
+                   why = details,
+                   .protect=FALSE)
+```
+
